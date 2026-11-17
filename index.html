@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My moto — Android Auto on your bike's dash</title>
+<meta name="description" content="My moto puts wireless Android Auto on CFMoto MotoPlay and other Carbit / EasyConnect dashes, and looks after tyre pressure, fuel range, rain, rides and service. Free and open source. No root, no PC.">
+<meta name="theme-color" content="#0B1016">
+<meta property="og:title" content="My moto — Android Auto on your bike's dash">
+<meta property="og:description" content="Wireless Android Auto on CFMoto MotoPlay and other EasyConnect dashes, plus tyre pressure, fuel range, rain alerts, ride reports and bike care.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="img/screens/28_tpms_dash_panel.png">
+<link rel="icon" href="img/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="My moto home">
+      <img src="img/mark.svg" alt="" width="32" height="32">
+      <span>My moto</span>
+    </a>
+    <nav class="links" aria-label="Sections">
+      <a href="#tyres">Tyre pressure</a>
+      <a href="#features">Features</a>
+      <a href="#dashes">Dashes</a>
+      <a href="#start">Get started</a>
+    </nav>
+    <a class="btn btn-sm" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">Download</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="dot"></span> New in 2.3: tyre pressure on the dash</p>
+        <h1>Android Auto on your bike's dash.</h1>
+        <p class="lede">Google Maps, Waze and your music on the MotoPlay screen over Wi‑Fi — plus <strong>tyre pressure</strong>,
+          <strong>fuel range</strong>, <strong>rain alerts</strong>, <strong>ride reports</strong> and <strong>service reminders</strong>,
+          from a phone in your pocket. No root, no PC.</p>
+        <div class="cta">
+          <a class="btn" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+            Download APK <span class="ver" data-version-label></span>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/KasunRoczDev/open-cfmoto">View source</a>
+        </div>
+        <p class="fine">Android 10+ · free &amp; open source (AGPL‑3.0) · not on the Play Store, you install the APK</p>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="dash">
+          <video src="media/hud-demo.mp4" autoplay muted loop playsinline poster="img/dashes/cfmoto-800mt-x.jpg"></video>
+          <span class="dash-label">Android Auto on a CFMoto dash</span>
+        </div>
+        <img class="phone" src="img/screens/ride.png" alt="" width="540" height="1102">
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands -->
+  <section class="brands" aria-label="Brands">
+    <div class="wrap">
+      <p>Works with dashes that show a <strong>MotoPlay / EasyConnect pairing QR</strong> — no T‑BOX needed</p>
+      <ul>
+        <li>CFMoto</li><li>Voge</li><li>Moto Morini</li><li>Morbidelli</li><li>Zontes</li><li>Benelli</li>
+        <li>QJ Motor</li><li>Rieju</li><li>UM</li><li>Wmoto</li><li>Longjia</li><li>GOES / Gladiator</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Tyre pressure -->
+  <section id="tyres" class="section">
+    <div class="wrap split">
+      <div>
+        <p class="kicker">New in 2.3</p>
+        <h2>Tyre pressure, right on the wheel it belongs to.</h2>
+        <p>Bluetooth valve‑cap TPMS sensors — the kind sold with the <em>HR TPMS</em> app — talk straight to My moto.
+          No extra app. The dash side panel shows your bike with each tyre's pressure under its own wheel.</p>
+        <ul class="ticks">
+          <li><strong>Live pressure, temperature and sensor battery</strong> for front and rear, and when each was last heard.</li>
+          <li><strong>Pair in seconds:</strong> type or scan the ID on the sensor, use Learn, or tap it in the nearby list.</li>
+          <li><strong>Your model's numbers:</strong> on a CFMoto 150SC, 27.6 psi front and rear, 29 psi rear two‑up.</li>
+          <li><strong>Alerts with sound</strong> for low, high, too hot or a low sensor battery — psi, bar or kPa.</li>
+          <li><strong>Watch in the background</strong> so alerts still reach you mid‑ride.</li>
+        </ul>
+      </div>
+      <div class="duo">
+        <figure class="shot">
+          <img src="img/screens/27_tpms.png" alt="Tyre pressure screen with front and rear tyres and the CFMoto 150SC figures" width="540" height="1102" loading="lazy">
+          <figcaption>Me ▸ Tyre pressure</figcaption>
+        </figure>
+        <figure class="panel">
+          <img src="img/screens/28_tpms_dash_panel.png" alt="Dash side panel: CFMoto 150SC with 29.3 psi under the rear wheel" width="384" height="480" loading="lazy">
+          <figcaption>On the dash side panel</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="section alt">
+    <div class="wrap">
+      <p class="kicker">Everything else</p>
+      <h2>Built for riding, not for fiddling.</h2>
+      <div class="grid">
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18l6-14 4 9 2-4 4 9z"/></svg>
+          <h3>Android Auto on the dash</h3>
+          <p>Maps, Waze or any Android Auto app on the MotoPlay screen over Wi‑Fi or Wi‑Fi Direct, with touch and pinch‑zoom.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3"/></svg>
+          <h3>Handlebar controls</h3>
+          <p>On touchless dashes the bar buttons drive Android Auto — tap, hold, double tap, every gesture remappable.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21V11m0 0c-4 0-6-3-6-6 3 0 6 2 6 6zm0 0c4 0 6-3 6-6-3 0-6 2-6 6z"/></svg>
+          <h3>Side panel &amp; eco tree</h3>
+          <p>A column beside Android Auto with turn‑by‑turn, a live eco‑speed hint and a tree that grows while you ride smoothly.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V5a2 2 0 012-2h6a2 2 0 012 2v16M5 11h10M15 8h2l2 2v8a2 2 0 01-4 0"/></svg>
+          <h3>Fuel log &amp; range</h3>
+          <p>Log fill‑ups, get your real km/L and cost per km, and see “⛽ ~185 km” counting down on the dash.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 15a4 4 0 010-8 5 5 0 019.6 1.5A3.5 3.5 0 0117 15zM9 18l-1 2m5-2l-1 2m5-2l-1 2"/></svg>
+          <h3>Rain alerts</h3>
+          <p>“Rain in 35 min” or “Rain ahead” on the side panel, from Open‑Meteo. Your position is rounded to about 1 km.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10m6 10V4m6 16v-7m4 7H2"/></svg>
+          <h3>Ride log &amp; weekly report</h3>
+          <p>Every ride saved with its route, behaviour score and GPX export; a weekly summary of distance, eco % and fuel.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 00-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 005.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg>
+          <h3>Maintenance</h3>
+          <p>Your model's service schedule against the kilometres you've ridden, overdue reminders and receipt photos.</p>
+        </article>
+        <article class="card">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4zm0 5l8 4 8-4M4 17l8 4 8-4"/></svg>
+          <h3>Backup &amp; widget</h3>
+          <p>Everything in one file to move phones; a home‑screen widget with range, last ride and next service.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screens -->
+  <section class="section" aria-labelledby="screens-h">
+    <div class="wrap">
+      <p class="kicker">A look inside</p>
+      <h2 id="screens-h">Big buttons, dark by default, readable in a glove.</h2>
+    </div>
+    <div class="rail" tabindex="0" aria-label="App screenshots">
+      <figure><img src="img/screens/ride.png" alt="Ride screen with the bike render, connect button and tyres" loading="lazy" width="540" height="1102"><figcaption>My moto</figcaption></figure>
+      <figure><img src="img/screens/27_tpms.png" alt="Tyre pressure" loading="lazy" width="540" height="1102"><figcaption>Tyre pressure</figcaption></figure>
+      <figure><img src="img/screens/20_fuel.png" alt="Fuel log and range" loading="lazy" width="540" height="1102"><figcaption>Fuel &amp; range</figcaption></figure>
+      <figure><img src="img/screens/21_weekly_report.png" alt="Weekly ride report" loading="lazy" width="540" height="1102"><figcaption>Weekly report</figcaption></figure>
+      <figure><img src="img/screens/22_maintenance.png" alt="Maintenance tracker" loading="lazy" width="540" height="1102"><figcaption>Maintenance</figcaption></figure>
+      <figure><img src="img/screens/13_dash_view.png" alt="Dash view: the live dash on the phone" loading="lazy"><figcaption>Dash view</figcaption></figure>
+      <figure><img src="img/screens/10_controls.png" alt="Controls: on-screen pad and handlebar mapping" loading="lazy"><figcaption>Controls</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- Dashes -->
+  <section id="dashes" class="section alt">
+    <div class="wrap">
+      <p class="kicker">On real bikes</p>
+      <h2>Riders are already using it.</h2>
+      <p class="sub">Community photos from CFMoto, Moto Morini, QJ Motor and Voge owners.</p>
+      <div class="gallery">
+        <figure><img src="img/dashes/cfmoto-800mt-x.jpg" alt="Android Auto on a CFMoto 800MT-X dash" loading="lazy" width="800" height="600"><figcaption>CFMoto 800MT‑X</figcaption></figure>
+        <figure><img src="img/dashes/cfmoto-450mt.jpg" alt="Android Auto on a CFMoto 450MT dash" loading="lazy" width="800" height="600"><figcaption>CFMoto 450MT</figcaption></figure>
+        <figure><img src="img/dashes/morini-xcape-700.jpg" alt="Android Auto on a Moto Morini X-Cape 700 dash" loading="lazy" width="800" height="600"><figcaption>Moto Morini X‑Cape 700</figcaption></figure>
+        <figure><img src="img/dashes/cfmoto-1000mt-x.jpg" alt="Android Auto on a CFMoto 1000MT-X dash" loading="lazy" width="800" height="600"><figcaption>CFMoto 1000MT‑X</figcaption></figure>
+        <figure><img src="img/dashes/qj-srk800rr.jpg" alt="Android Auto on a QJ Motor SRK 800 RR dash" loading="lazy" width="800" height="600"><figcaption>QJ Motor SRK 800 RR</figcaption></figure>
+        <figure><img src="img/dashes/voge-ds800-rally.jpg" alt="Android Auto on a Voge DS800 Rally dash" loading="lazy" width="800" height="600"><figcaption>Voge DS800 Rally</figcaption></figure>
+        <figure><img src="img/dashes/cfmoto-675nk.jpg" alt="Android Auto on a CFMoto 675NK dash" loading="lazy" width="800" height="600"><figcaption>CFMoto 675NK</figcaption></figure>
+        <figure><img src="img/dashes/cfmoto-150sc.jpg" alt="Android Auto on a CFMoto 150SC dash" loading="lazy" width="800" height="600"><figcaption>CFMoto 150SC</figcaption></figure>
+      </div>
+      <p class="more"><a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Full list of supported bikes →</a></p>
+    </div>
+  </section>
+
+  <!-- Get started -->
+  <section id="start" class="section">
+    <div class="wrap">
+      <p class="kicker">Get started</p>
+      <h2>Four steps, about five minutes.</h2>
+      <ol class="steps">
+        <li>
+          <h3>Find the QR</h3>
+          <p>Parked, open the dash's <strong>MotoPlay / phone‑connection</strong> screen. If it shows a pairing QR code, My moto can connect.</p>
+        </li>
+        <li>
+          <h3>Install the APK</h3>
+          <p>Download <a href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">OpenCfMoto.apk</a> and open it. Android asks once to allow installs from your browser.
+            32‑bit phone? Use <a href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.armv7.apk">the armv7 build</a>.</p>
+        </li>
+        <li>
+          <h3>Scan and connect</h3>
+          <p>Tap <strong>Scan your bike</strong>, point the camera at the dash QR, then <strong>Connect</strong>. The app remembers your bike after that.</p>
+        </li>
+        <li>
+          <h3>Start Android Auto</h3>
+          <p>First time only: in Android Auto settings tap <strong>Version</strong> about 10 times, then ⋮ ▸ <strong>Start head unit server</strong>.
+            <a href="https://github.com/KasunRoczDev/open-cfmoto#3-android-auto-setup">Full steps</a>.</p>
+        </li>
+      </ol>
+      <div class="note">
+        <strong>Switching from the original OpenCfMoto?</strong> This build is signed with a different key. Save a backup in
+        <em>Me ▸ Backup &amp; restore</em>, uninstall the original, then install My moto and restore.
+      </div>
+      <div class="cta center">
+        <a class="btn" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+          Download APK <span class="ver" data-version-label></span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest">Release notes</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <a class="brand" href="#top"><img src="img/mark.svg" alt="" width="28" height="28"><span>My moto</span></a>
+      <p>The <em>Rider Extras</em> build by KasunRoczDev, based on
+        <a href="https://github.com/zanderp/open-cfmoto">OpenCfMoto</a> by Alexandru and its contributors.
+        Free software under the <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/LICENSE">GNU AGPL v3</a>.</p>
+    </div>
+    <div>
+      <p class="warn">Community project — not affiliated with CFMoto, Carbit, Google or any motorcycle brand.
+        Set your route before you ride and don't rely on it for critical navigation. Use at your own risk.</p>
+      <p class="foot-links">
+        <a href="https://github.com/KasunRoczDev/open-cfmoto">Source</a>
+        <a href="https://github.com/KasunRoczDev/open-cfmoto/releases">Releases</a>
+        <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/PRIVACY.md">Privacy</a>
+        <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Supported bikes</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Fill in the current version from the latest GitHub release; the page still works without it.
+  fetch('https://api.github.com/repos/KasunRoczDev/open-cfmoto/releases/latest')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (rel) {
+      if (!rel || !rel.tag_name) return;
+      var v = rel.tag_name.replace(/^v/, '');
+      document.querySelectorAll('[data-version-label]').forEach(function (el) { el.textContent = v; });
+    })
+    .catch(function () {});
+</script>
+</body>
+</html>
