@@ -296,6 +296,8 @@
     a.setAttribute('data-goatcounter-title', 'Download APK');
   });
   if (counting) {
+    // Record the page path only, so ?ref=… links don't show up as separate pages (the referrer is still kept).
+    window.goatcounter = { path: function () { return location.pathname; } };
     var gc = document.createElement('script');
     gc.async = true;
     gc.src = 'https://gc.zgo.at/count.js';
