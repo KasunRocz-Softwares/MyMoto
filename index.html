@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/screens/28_tpms_dash_panel.png">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 
@@ -44,10 +44,10 @@
         </div>
       </div>
       <div class="stat-grid">
-        <div class="stat"><span class="stat-label">Page views</span><span class="stat-num" data-stat="views">…</span><span class="stat-note">every load of this page</span></div>
-        <div class="stat"><span class="stat-label">Visitors</span><span class="stat-num" data-stat="visitors">…</span><span class="stat-note">counted once per browser</span></div>
+        <div class="stat"><span class="stat-label">Visitors</span><span class="stat-num" data-stat="visitors">…</span><span class="stat-note">whole site, all time</span></div>
         <div class="stat"><span class="stat-label">Download clicks</span><span class="stat-num" data-stat="clicks">…</span><span class="stat-note">Download buttons on this site</span></div>
         <div class="stat"><span class="stat-label">APK downloads</span><span class="stat-num" data-stat="downloads">…</span><span class="stat-note">all releases, from GitHub</span></div>
+        <a class="stat stat-link" href="https://mymoto.goatcounter.com/" target="_blank" rel="noopener"><span class="stat-label">Page views &amp; more</span><span class="stat-num">Dashboard →</span><span class="stat-note">views, countries, referrers</span></a>
       </div>
       <div class="goal">
         <div class="goal-text"><span>Public download counter</span><span data-stat="goal">…</span></div>
@@ -274,15 +274,14 @@
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/PRIVACY.md">Privacy</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Supported bikes</a>
       </p>
-      <p class="count-note">This page counts visits and Download clicks with an anonymous counter: no cookies, no personal data.</p>
+      <p class="count-note">Visits and Download clicks are counted with <a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>: no cookies, no personal data.</p>
     </div>
   </div>
 </footer>
 
 <script>
 (function () {
-  var NS = 'kasunrocz-mymoto';
-  var COUNTER = 'https://abacus.jasoncameron.dev';
+  var GC = 'https://mymoto.goatcounter.com';
   var RELEASES = 'https://api.github.com/repos/KasunRoczDev/open-cfmoto/releases?per_page=100';
   var PUBLIC_AT = 1000;   // the download count shows on the page itself from here on
 
@@ -291,35 +290,34 @@
   var counting = !showStats && /\.github\.io$/.test(location.hostname);
   var nf = new Intl.NumberFormat('en');
 
-  // Every request gives up after 8 s, so a blocked or slow service shows "n/a" instead of hanging.
-  function timed(url, opts) {
-    opts = opts || {};
-    if (window.AbortController && !opts.keepalive) {
+  // Download buttons become GoatCounter click events (one per APK).
+  document.querySelectorAll('a[href*="/releases/latest/download/"]').forEach(function (a) {
+    a.setAttribute('data-goatcounter-click', /armv7/.test(a.href) ? 'download-apk-armv7' : 'download-apk');
+    a.setAttribute('data-goatcounter-title', 'Download APK');
+  });
+  if (counting) {
+    var gc = document.createElement('script');
+    gc.async = true;
+    gc.src = 'https://gc.zgo.at/count.js';
+    gc.setAttribute('data-goatcounter', GC + '/count');
+    document.body.appendChild(gc);
+  }
+
+  // Every request gives up after 8 s, so a slow service shows "n/a" instead of hanging.
+  function json(url) {
+    var opts = {};
+    if (window.AbortController) {
       var ac = new AbortController();
       setTimeout(function () { ac.abort(); }, 8000);
       opts.signal = ac.signal;
     }
-    return fetch(url, opts);
-  }
-  function json(url, opts) {
-    return timed(url, opts).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
-  }
-  function hit(key, opts) { return json(COUNTER + '/hit/' + NS + '/' + key, opts); }
-  function read(key) {
-    return timed(COUNTER + '/get/' + NS + '/' + key)
-      .then(function (r) { return r.status === 404 ? { value: 0 } : r.ok ? r.json() : null; })
-      .then(function (j) { return j ? j.value : null; })
+    return fetch(url, opts)
+      .then(function (r) { return r.status === 404 ? { count: '0' } : r.ok ? r.json() : null; })
       .catch(function () { return null; });
   }
-  function seen(set) {
-    try { if (set) localStorage.setItem('mm_seen', '1'); return localStorage.getItem('mm_seen') === '1'; } catch (e) { return true; }
-  }
-
-  if (counting) {
-    hit('views');
-    if (!seen()) { seen(true); hit('visitors'); }
-    document.querySelectorAll('a[href*="/releases/latest/download/"]').forEach(function (a) {
-      a.addEventListener('click', function () { hit('download-clicks', { keepalive: true }); });
+  function gcCount(path) {
+    return json(GC + '/counter/' + encodeURIComponent(path) + '.json').then(function (j) {
+      return j && j.count != null ? parseInt(String(j.count).replace(/[^0-9]/g, ''), 10) || 0 : null;
     });
   }
 
@@ -356,15 +354,14 @@
 
   var panel = document.getElementById('stats');
   panel.hidden = false;
-  document.querySelector('meta[name="robots"]') || document.head.insertAdjacentHTML('beforeend', '<meta name="robots" content="noindex">');
+  document.head.insertAdjacentHTML('beforeend', '<meta name="robots" content="noindex">');
   function set(key, text) { var el = panel.querySelector('[data-stat="' + key + '"]'); if (el) el.textContent = text; }
   function num(v) { return v == null ? 'n/a' : nf.format(v); }
 
   function render(rel) {
-    Promise.all([read('views'), read('visitors'), read('download-clicks')]).then(function (c) {
-      set('views', num(c[0]));
-      set('visitors', num(c[1]));
-      set('clicks', num(c[2]));
+    Promise.all([gcCount('TOTAL'), gcCount('download-apk'), gcCount('download-apk-armv7')]).then(function (c) {
+      set('visitors', num(c[0]));
+      set('clicks', c[1] == null && c[2] == null ? 'n/a' : num((c[1] || 0) + (c[2] || 0)));
     });
     (rel || loadReleases()).then(function (r) {
       if (!r) { set('downloads', 'n/a'); set('goal', 'GitHub unavailable'); return; }
@@ -385,7 +382,7 @@
         tbody.appendChild(tr);
       });
     });
-    set('updated', 'Updated ' + new Date().toLocaleString() + ' · visits via a public anonymous counter, downloads from GitHub release counts');
+    set('updated', 'Updated ' + new Date().toLocaleString() + ' · visitor counts from GoatCounter (cached up to 4 h), downloads from GitHub release counts');
   }
 
   render(releases);

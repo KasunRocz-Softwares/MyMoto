@@ -240,3 +240,6 @@ button.btn-ghost { border: 1px solid var(--outline); }
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
   .rel-table th:nth-child(5), .rel-table td:nth-child(5) { display: none; }
 }
+.stat-link { color: var(--text); text-decoration: none; transition: border-color .2s ease; }
+.stat-link:hover { border-color: var(--accent); text-decoration: none; }
+.stat-link .stat-num { font-size: 1.5rem; color: var(--accent); align-self: center; }
