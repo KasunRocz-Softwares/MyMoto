@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/screens/28_tpms_dash_panel.png">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=4">
 </head>
 <body>
 
@@ -33,6 +33,34 @@
 
 <main id="top">
 
+  <!-- Private stats: shown only with ?stats in the URL -->
+  <section id="stats" class="stats" hidden aria-labelledby="stats-h">
+    <div class="wrap">
+      <div class="stats-head">
+        <h2 id="stats-h">Site &amp; download stats</h2>
+        <div class="stats-actions">
+          <button type="button" class="btn btn-sm btn-ghost" id="stats-refresh">Refresh</button>
+          <a class="btn btn-sm btn-ghost" href="./">Close</a>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat"><span class="stat-label">Page views</span><span class="stat-num" data-stat="views">…</span><span class="stat-note">every load of this page</span></div>
+        <div class="stat"><span class="stat-label">Visitors</span><span class="stat-num" data-stat="visitors">…</span><span class="stat-note">counted once per browser</span></div>
+        <div class="stat"><span class="stat-label">Download clicks</span><span class="stat-num" data-stat="clicks">…</span><span class="stat-note">Download buttons on this site</span></div>
+        <div class="stat"><span class="stat-label">APK downloads</span><span class="stat-num" data-stat="downloads">…</span><span class="stat-note">all releases, from GitHub</span></div>
+      </div>
+      <div class="goal">
+        <div class="goal-text"><span>Public download counter</span><span data-stat="goal">…</span></div>
+        <div class="goal-bar"><span data-stat="goal-bar"></span></div>
+      </div>
+      <table class="rel-table">
+        <thead><tr><th>Release</th><th>64-bit</th><th>armv7</th><th>Total</th><th>Published</th></tr></thead>
+        <tbody data-stat="releases"><tr><td colspan="5">Loading…</td></tr></tbody>
+      </table>
+      <p class="stats-foot" data-stat="updated"></p>
+    </div>
+  </section>
+
   <!-- Hero -->
   <section class="hero">
     <div class="wrap hero-in">
@@ -49,7 +77,7 @@
           </a>
           <a class="btn btn-ghost" href="https://github.com/KasunRoczDev/open-cfmoto">View source</a>
         </div>
-        <p class="fine">Android 10+ · free &amp; open source (AGPL‑3.0) · not on the Play Store, you install the APK</p>
+        <p class="fine">Android 10+ · free &amp; open source (AGPL‑3.0) · not on the Play Store, you install the APK<span class="dl-count" data-public-downloads hidden></span></p>
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="dash">
@@ -246,20 +274,124 @@
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/PRIVACY.md">Privacy</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Supported bikes</a>
       </p>
+      <p class="count-note">This page counts visits and Download clicks with an anonymous counter: no cookies, no personal data.</p>
     </div>
   </div>
 </footer>
 
 <script>
-  // Fill in the current version from the latest GitHub release; the page still works without it.
-  fetch('https://api.github.com/repos/KasunRoczDev/open-cfmoto/releases/latest')
-    .then(function (r) { return r.ok ? r.json() : null; })
-    .then(function (rel) {
-      if (!rel || !rel.tag_name) return;
-      var v = rel.tag_name.replace(/^v/, '');
-      document.querySelectorAll('[data-version-label]').forEach(function (el) { el.textContent = v; });
-    })
-    .catch(function () {});
+(function () {
+  var NS = 'kasunrocz-mymoto';
+  var COUNTER = 'https://abacus.jasoncameron.dev';
+  var RELEASES = 'https://api.github.com/repos/KasunRoczDev/open-cfmoto/releases?per_page=100';
+  var PUBLIC_AT = 1000;   // the download count shows on the page itself from here on
+
+  var showStats = new URLSearchParams(location.search).has('stats');
+  // Count real visitors only: not the stats view, not local previews.
+  var counting = !showStats && /\.github\.io$/.test(location.hostname);
+  var nf = new Intl.NumberFormat('en');
+
+  // Every request gives up after 8 s, so a blocked or slow service shows "n/a" instead of hanging.
+  function timed(url, opts) {
+    opts = opts || {};
+    if (window.AbortController && !opts.keepalive) {
+      var ac = new AbortController();
+      setTimeout(function () { ac.abort(); }, 8000);
+      opts.signal = ac.signal;
+    }
+    return fetch(url, opts);
+  }
+  function json(url, opts) {
+    return timed(url, opts).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+  function hit(key, opts) { return json(COUNTER + '/hit/' + NS + '/' + key, opts); }
+  function read(key) {
+    return timed(COUNTER + '/get/' + NS + '/' + key)
+      .then(function (r) { return r.status === 404 ? { value: 0 } : r.ok ? r.json() : null; })
+      .then(function (j) { return j ? j.value : null; })
+      .catch(function () { return null; });
+  }
+  function seen(set) {
+    try { if (set) localStorage.setItem('mm_seen', '1'); return localStorage.getItem('mm_seen') === '1'; } catch (e) { return true; }
+  }
+
+  if (counting) {
+    hit('views');
+    if (!seen()) { seen(true); hit('visitors'); }
+    document.querySelectorAll('a[href*="/releases/latest/download/"]').forEach(function (a) {
+      a.addEventListener('click', function () { hit('download-clicks', { keepalive: true }); });
+    });
+  }
+
+  // Releases: current version for the buttons, and the download total.
+  function loadReleases() {
+    return json(RELEASES).then(function (rels) {
+      if (!rels || !rels.length) return null;
+      var published = rels.filter(function (r) { return !r.draft && !r.prerelease; });
+      var latest = published[0];
+      if (latest) {
+        var v = latest.tag_name.replace(/^v/, '');
+        document.querySelectorAll('[data-version-label]').forEach(function (el) { el.textContent = v; });
+      }
+      var total = 0;
+      var rows = published.map(function (r) {
+        var by = {};
+        r.assets.forEach(function (a) { by[a.name] = (by[a.name] || 0) + a.download_count; total += a.download_count; });
+        var sum = r.assets.reduce(function (n, a) { return n + a.download_count; }, 0);
+        return { tag: r.tag_name, apk: by['OpenCfMoto.apk'] || 0, armv7: by['OpenCfMoto.armv7.apk'] || 0, sum: sum, at: r.published_at };
+      });
+      if (total >= PUBLIC_AT) {
+        document.querySelectorAll('[data-public-downloads]').forEach(function (el) {
+          el.textContent = nf.format(total) + ' downloads';
+          el.hidden = false;
+        });
+      }
+      return { total: total, rows: rows };
+    });
+  }
+
+  var releases = loadReleases();
+
+  if (!showStats) return;
+
+  var panel = document.getElementById('stats');
+  panel.hidden = false;
+  document.querySelector('meta[name="robots"]') || document.head.insertAdjacentHTML('beforeend', '<meta name="robots" content="noindex">');
+  function set(key, text) { var el = panel.querySelector('[data-stat="' + key + '"]'); if (el) el.textContent = text; }
+  function num(v) { return v == null ? 'n/a' : nf.format(v); }
+
+  function render(rel) {
+    Promise.all([read('views'), read('visitors'), read('download-clicks')]).then(function (c) {
+      set('views', num(c[0]));
+      set('visitors', num(c[1]));
+      set('clicks', num(c[2]));
+    });
+    (rel || loadReleases()).then(function (r) {
+      if (!r) { set('downloads', 'n/a'); set('goal', 'GitHub unavailable'); return; }
+      set('downloads', num(r.total));
+      var pct = Math.min(100, r.total / PUBLIC_AT * 100);
+      set('goal', r.total >= PUBLIC_AT ? 'Showing on the page (' + num(r.total) + ')' : num(r.total) + ' of ' + num(PUBLIC_AT) + ' — shows on the page at ' + num(PUBLIC_AT));
+      panel.querySelector('[data-stat="goal-bar"]').style.width = pct + '%';
+      var tbody = panel.querySelector('[data-stat="releases"]');
+      tbody.innerHTML = '';
+      r.rows.forEach(function (row) {
+        var tr = document.createElement('tr');
+        [row.tag, num(row.apk), num(row.armv7), num(row.sum), row.at ? row.at.slice(0, 10) : ''].forEach(function (t, i) {
+          var td = document.createElement('td');
+          td.textContent = t;
+          if (i === 3) td.className = 'strong';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    });
+    set('updated', 'Updated ' + new Date().toLocaleString() + ' · visits via a public anonymous counter, downloads from GitHub release counts');
+  }
+
+  render(releases);
+  document.getElementById('stats-refresh').addEventListener('click', function () { render(null); });
+  panel.scrollIntoView();
+})();
 </script>
 </body>
 </html>
