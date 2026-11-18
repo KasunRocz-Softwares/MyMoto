@@ -4,7 +4,7 @@ The project site for **My moto** (the *Rider Extras* build of OpenCfMoto): wirel
 CFMoto MotoPlay and other Carbit / EasyConnect dashes, plus tyre pressure, fuel range, rain alerts,
 ride reports and bike care.
 
-**Live:** https://kasunrocz-softwares.github.io/MyMoto/
+**Live:** https://qulaxy.com/MyMoto/
 
 The app itself, its source and its releases live at
 [KasunRoczDev/open-cfmoto](https://github.com/KasunRoczDev/open-cfmoto). The download buttons always
@@ -15,7 +15,7 @@ point at that repo's latest release, and the page fills in the version number fr
 Plain static files, no build step:
 
 - `index.html` — the page
-- `style.css` — styles, in the [KasunRocz Softwares](https://kasunrocz-softwares.github.io/) visual family (amber accent)
+- `style.css` — styles, in the [KasunRocz Softwares](https://qulaxy.com/) visual family (amber accent)
 - `kr-hero.js` — the 3D ringed planet behind the hero (Three.js from jsDelivr; the page works without it)
 - `img/screens/` — app screenshots (from `docs/screenshots` in the app repo)
 - `img/dashes/` — community dash photos, resized to 800×600

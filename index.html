@@ -31,7 +31,7 @@
       <a href="#dashes">Dashes</a>
       <a href="#start">Get started</a>
     </nav>
-    <a class="org" href="https://kasunrocz-softwares.github.io/" title="All KasunRocz Softwares projects">All projects</a>
+    <a class="org" href="https://qulaxy.com/" title="All KasunRocz Softwares projects">All projects</a>
     <a class="btn btn-sm" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">Download</a>
   </div>
 </header>
@@ -279,7 +279,7 @@
         <a href="https://github.com/KasunRoczDev/open-cfmoto/releases">Releases</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/PRIVACY.md">Privacy</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Supported bikes</a>
-        <a href="https://kasunrocz-softwares.github.io/">More from KasunRocz Softwares</a>
+        <a href="https://qulaxy.com/">More from KasunRocz Softwares</a>
       </p>
       <p class="count-note">Visits and Download clicks are counted with <a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>: no cookies, no personal data.</p>
     </div>
@@ -294,7 +294,7 @@
 
   var showStats = new URLSearchParams(location.search).has('stats');
   // Count real visitors only: not the stats view, not local previews.
-  var counting = !showStats && /\.github\.io$/.test(location.hostname);
+  var counting = !showStats && /(\.github\.io|^qulaxy\.com)$/.test(location.hostname);
   var nf = new Intl.NumberFormat('en');
 
   // Download buttons become GoatCounter click events (one per APK).
