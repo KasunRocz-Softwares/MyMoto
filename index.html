@@ -5,13 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My moto — Android Auto on your bike's dash</title>
 <meta name="description" content="My moto puts wireless Android Auto on CFMoto MotoPlay and other Carbit / EasyConnect dashes, and looks after tyre pressure, fuel range, rain, rides and service. Free and open source. No root, no PC.">
-<meta name="theme-color" content="#0B1016">
+<meta name="theme-color" content="#04050a">
 <meta property="og:title" content="My moto — Android Auto on your bike's dash">
 <meta property="og:description" content="Wireless Android Auto on CFMoto MotoPlay and other EasyConnect dashes, plus tyre pressure, fuel range, rain alerts, ride reports and bike care.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="img/screens/28_tpms_dash_panel.png">
 <link rel="icon" href="img/mark.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=5">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=6">
+<script type="module" src="kr-hero.js?v=1"></script>
 </head>
 <body>
 
@@ -27,6 +31,7 @@
       <a href="#dashes">Dashes</a>
       <a href="#start">Get started</a>
     </nav>
+    <a class="org" href="https://kasunrocz-softwares.github.io/" title="All KasunRocz Softwares projects">All projects</a>
     <a class="btn btn-sm" href="https://github.com/KasunRoczDev/open-cfmoto/releases/latest/download/OpenCfMoto.apk">Download</a>
   </div>
 </header>
@@ -63,6 +68,7 @@
 
   <!-- Hero -->
   <section class="hero">
+    <canvas class="kr-planet" data-kind="ring" data-color="#ffb547" aria-hidden="true"></canvas>
     <div class="wrap hero-in">
       <div class="hero-copy">
         <p class="eyebrow"><span class="dot"></span> New in 2.3: tyre pressure on the dash</p>
@@ -273,6 +279,7 @@
         <a href="https://github.com/KasunRoczDev/open-cfmoto/releases">Releases</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/PRIVACY.md">Privacy</a>
         <a href="https://github.com/KasunRoczDev/open-cfmoto/blob/main/docs/SUPPORTED-BIKES.md">Supported bikes</a>
+        <a href="https://kasunrocz-softwares.github.io/">More from KasunRocz Softwares</a>
       </p>
       <p class="count-note">Visits and Download clicks are counted with <a href="https://www.goatcounter.com/help/privacy">GoatCounter</a>: no cookies, no personal data.</p>
     </div>
